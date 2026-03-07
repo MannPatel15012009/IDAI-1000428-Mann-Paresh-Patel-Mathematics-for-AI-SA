@@ -2,130 +2,161 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import plotly.graph_objects as go
 import seaborn as sns
 import matplotlib.pyplot as plt
 
 # --- 1. PAGE SETUP & LAYOUT ---
-st.set_page_config(page_title="Rocket Launch Dashboard", layout="wide", page_icon="🚀")
-st.title("🚀 Aerospace Data Insights: Mission Dashboard")
-st.markdown("Explore how factors like fuel, payload, cost, and success rates connect across past space missions.")
+st.set_page_config(page_title="Rocket Launch Dashboard", layout="wide", page_icon="🌌")
+st.title("🌌 Aerospace Data Insights: Mission Dashboard")
+st.markdown("### ✨ Explore how factors like fuel, payload, cost, and success rates connect across past space missions.")
 
 # --- 2. DATA LOADING & CLEANING (Stage 2) ---
 @st.cache_data
 def load_and_clean_data(filepath="space_missions_dataset.csv"):
     df = pd.read_csv(filepath)
     
-    # Convert launch dates to proper date format
+    # Clean dates
     df['Launch Date'] = pd.to_datetime(df['Launch Date'], errors='coerce')
     
-    # Create an Outcome column based on success percentage (>= 90% is Success)
+    # Handle missing values for numeric columns
+    numeric_cols = ['Distance from Earth (light-years)', 'Mission Duration (years)', 
+                    'Mission Cost (billion USD)', 'Scientific Yield (points)', 
+                    'Crew Size', 'Mission Success (%)', 'Fuel Consumption (tons)', 'Payload Weight (tons)']
+    for col in numeric_cols:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors='coerce')
+            df[col] = df[col].fillna(df[col].median())
+            
+    # Create Outcome column
     df['Outcome'] = df['Mission Success (%)'].apply(lambda x: 'Success' if x >= 90 else 'Failure')
-    
     return df
 
-# Load the dataframe
 df = load_and_clean_data()
 
-# --- 3. SIDEBAR CONTROLS ---
-st.sidebar.header("Dashboard Filters")
-st.sidebar.markdown("Filter the dataset to explore specific scenarios.")
+# --- 3. COLORFUL SIDEBAR CONTROLS ---
+st.sidebar.header("🎛️ Dashboard Filters")
 
-# Dropdown Filter for Launch Vehicle
-selected_vehicle = st.sidebar.selectbox(
-    "Select Launch Vehicle", 
-    ["All"] + df['Launch Vehicle'].dropna().unique().tolist()
-)
-
-# Slider Filter for Distance
+# Dropdowns and Sliders
+selected_vehicle = st.sidebar.selectbox("🚀 Select Launch Vehicle", ["All"] + df['Launch Vehicle'].dropna().unique().tolist())
 min_dist = float(df['Distance from Earth (light-years)'].min())
 max_dist = float(df['Distance from Earth (light-years)'].max())
-selected_dist = st.sidebar.slider(
-    "Max Distance from Earth (light-years)", 
-    min_value=min_dist, max_value=max_dist, value=max_dist
-)
+selected_dist = st.sidebar.slider("📏 Max Distance from Earth", min_value=min_dist, max_value=max_dist, value=max_dist)
+
+# CHECKBUTTON 1: Filter successful missions
+st.sidebar.markdown("---")
+show_successful_only = st.sidebar.checkbox("🟢 Show Only Successful Missions (>= 90%)", value=False)
 
 # Apply filters
 filtered_df = df.copy()
 if selected_vehicle != "All":
     filtered_df = filtered_df[filtered_df['Launch Vehicle'] == selected_vehicle]
 filtered_df = filtered_df[filtered_df['Distance from Earth (light-years)'] <= selected_dist]
+if show_successful_only:
+    filtered_df = filtered_df[filtered_df['Outcome'] == 'Success']
 
-st.sidebar.write(f"**Total Missions Displayed:** {len(filtered_df)}")
+st.sidebar.success(f"**Total Missions Displayed:** {len(filtered_df)}")
 
-# --- 4. COMPULSORY VISUALIZATIONS (Stage 4) ---
+# --- 4. COMPULSORY VISUALIZATIONS & HEATMAP ---
 st.header("📊 Real-World Mission Analysis")
-st.markdown("These visualizations plot the exact data points from the CSV dataset.")
+outcome_colors = {'Success': '#00CC96', 'Failure': '#EF553B'}
 
 col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("1. Payload vs. Fuel Consumption")
-    # Scatter Plot using Plotly
-    fig1 = px.scatter(
-        filtered_df, x='Payload Weight (tons)', y='Fuel Consumption (tons)', 
-        color='Outcome', hover_data=['Mission Name'],
-        title="Heavier payloads generally require more fuel"
-    )
+    fig1 = px.scatter(filtered_df, x='Payload Weight (tons)', y='Fuel Consumption (tons)', 
+                      color='Outcome', color_discrete_map=outcome_colors, title="Payload vs. Fuel Requirements")
+    fig1.update_layout(template="plotly_dark")
     st.plotly_chart(fig1, use_container_width=True)
 
 with col2:
     st.subheader("2. Mission Cost: Success vs. Failure")
-    # Bar Chart using Plotly
     cost_by_outcome = filtered_df.groupby('Outcome', as_index=False)['Mission Cost (billion USD)'].mean()
-    fig2 = px.bar(
-        cost_by_outcome, x='Outcome', y='Mission Cost (billion USD)', 
-        color='Outcome', title="Average Cost by Mission Outcome"
-    )
+    fig2 = px.bar(cost_by_outcome, x='Outcome', y='Mission Cost (billion USD)', 
+                  color='Outcome', color_discrete_map=outcome_colors, title="Average Cost by Mission Outcome")
+    fig2.update_layout(template="plotly_dark")
     st.plotly_chart(fig2, use_container_width=True)
 
 col3, col4 = st.columns(2)
 
 with col3:
     st.subheader("3. Mission Duration vs. Distance")
-    # Line Chart using Seaborn
-    fig3, ax3 = plt.subplots(figsize=(8, 5))
-    sns.lineplot(data=filtered_df, x='Distance from Earth (light-years)', y='Mission Duration (years)', ax=ax3, color='indigo')
-    ax3.set_title("How Distance Impacts Travel Time")
-    st.pyplot(fig3)
+    # Sort data by distance to ensure a clean, continuous line graph
+    sorted_dist_df = filtered_df.sort_values(by='Distance from Earth (light-years)')
+    
+    fig3 = px.line(
+        sorted_dist_df, 
+        x='Distance from Earth (light-years)', 
+        y='Mission Duration (years)', 
+        markers=True, 
+        title="How Distance Impacts Travel Time"
+    )
+    fig3.update_traces(line_color='#AB63FA', marker=dict(size=2, color='#00E676'))
+    fig3.update_layout(template="plotly_dark")
+    st.plotly_chart(fig3, use_container_width=True)
 
 with col4:
     st.subheader("4. Crew Size vs. Mission Success %")
-    # Box Plot using Seaborn
-    # Binning crew sizes so the box plot looks clean
-    filtered_df['Crew Category'] = pd.qcut(filtered_df['Crew Size'], q=3, labels=['Small', 'Medium', 'Large'], duplicates='drop')
-    fig4, ax4 = plt.subplots(figsize=(8, 5))
-    sns.boxplot(data=filtered_df, x='Crew Category', y='Mission Success (%)', ax=ax4, palette="Set2")
-    ax4.set_title("Success Rates by Crew Size Category")
-    st.pyplot(fig4)
+    
+    # Creating clear, easy-to-understand numerical groups instead of confusing statistical buckets
+    bins = [0, 20, 50, np.inf]
+    labels = ['Small Crew (1-20)', 'Medium Crew (21-50)', 'Large Crew (51+)']
+    filtered_df['Crew Category'] = pd.cut(filtered_df['Crew Size'], bins=bins, labels=labels)
+    
+    # A clean, straightforward interactive box plot
+    fig4 = px.box(
+        filtered_df, 
+        x='Crew Category', 
+        y='Mission Success (%)', 
+        color='Crew Category',
+        title="Does a larger crew improve success rates?",
+        category_orders={"Crew Category": ['Small Crew (1-20)', 'Medium Crew (21-50)', 'Large Crew (51+)']}
+    )
+    # Removing the legend since the x-axis already explains the categories perfectly
+    fig4.update_layout(template="plotly_dark", showlegend=False)
+    st.plotly_chart(fig4, use_container_width=True)
+st.markdown("---")
+st.subheader("🔥 5. Correlation Heatmap: Factors Affecting Success")
+numeric_cols = ['Distance from Earth (light-years)', 'Mission Duration (years)', 'Mission Cost (billion USD)', 'Scientific Yield (points)', 'Crew Size', 'Mission Success (%)', 'Fuel Consumption (tons)', 'Payload Weight (tons)']
+corr_matrix = filtered_df[numeric_cols].corr()
 
-st.subheader("5. Scientific Yield vs. Mission Cost")
-# Scatter/Bar Chart using Matplotlib
+fig_heatmap = px.imshow(corr_matrix, text_auto=".2f", aspect="auto", color_continuous_scale='Turbo', title="Correlation Matrix")
+fig_heatmap.update_layout(template="plotly_dark")
+st.plotly_chart(fig_heatmap, use_container_width=True)
+
+st.markdown("---")
+st.subheader("🔬 6. Scientific Yield vs. Mission Cost")
 fig5, ax5 = plt.subplots(figsize=(10, 5))
-ax5.scatter(filtered_df['Mission Cost (billion USD)'], filtered_df['Scientific Yield (points)'], alpha=0.6, c='teal', edgecolors='w', s=80)
+ax5.scatter(filtered_df['Mission Cost (billion USD)'], filtered_df['Scientific Yield (points)'], alpha=0.8, c='#00E676', edgecolors='w', s=80)
 ax5.set_xlabel("Mission Cost (billion USD)")
 ax5.set_ylabel("Scientific Yield (points)")
-ax5.set_title("Scientific Return against Financial Investment")
-ax5.grid(True, linestyle='--', alpha=0.5)
+ax5.grid(True, linestyle='--', alpha=0.3)
+# Make matplotlib figure dark to match
+fig5.patch.set_facecolor('#111111')
+ax5.set_facecolor('#111111')
+ax5.xaxis.label.set_color('white')
+ax5.yaxis.label.set_color('white')
+ax5.tick_params(colors='white')
 st.pyplot(fig5)
 
-# --- 5. ROCKET LAUNCH SIMULATION (Stage 3) ---
-st.header("⚙️ Rocket Launch Path Simulation")
+# --- 5. ROCKET LAUNCH SIMULATION ---
 st.markdown("---")
-st.markdown("This simulation applies Newton's Second Law to calculate acceleration as the difference between upward thrust and downward forces (gravity), divided by rocket mass.")
+st.header("⚙️ Rocket Launch Path Simulation")
+st.markdown("Simulating Newton's Second Law with optional Air Drag calculation.")
 
 sim_col1, sim_col2 = st.columns([1, 2])
 
 with sim_col1:
-    st.markdown("### Initial Conditions")
     initial_mass = st.number_input("Rocket Empty Mass (kg)", value=50000)
     thrust = st.number_input("Engine Thrust (N)", value=2500000) 
     initial_fuel = st.number_input("Initial Fuel (kg)", value=100000)
     payload = st.number_input("Payload Weight (kg)", value=5000)
     burn_rate = st.slider("Fuel Burn Rate (kg per step)", 50, 1000, 500)
-    steps = 200
-
-    run_sim = st.button("🚀 Run Simulation", type="primary")
+    
+    # CHECKBUTTON 2: Realism Mode (Drag)
+    include_drag = st.checkbox("💨 Enable Air Drag (Realism Mode)", value=True)
+    
+    run_sim = st.button("🚀 IGNITE ENGINE", type="primary", use_container_width=True)
 
 with sim_col2:
     if run_sim:
@@ -133,8 +164,9 @@ with sim_col2:
         velocity, altitude = 0.0, 0.0
         gravity = 9.81
         current_fuel = initial_fuel
+        drag_coeff = 0.5 
         
-        for t in range(steps):
+        for t in range(200):
             total_mass = initial_mass + payload + current_fuel
             
             if current_fuel > 0:
@@ -144,7 +176,9 @@ with sim_col2:
                 current_thrust = 0  
                 
             force_gravity = total_mass * gravity
-            net_force = current_thrust - force_gravity
+            force_drag = drag_coeff * (velocity ** 2) if include_drag and velocity > 0 else 0
+            
+            net_force = current_thrust - force_gravity - force_drag
             
             if altitude <= 0 and net_force < 0:
                 acceleration, velocity, altitude = 0, 0, 0
@@ -162,16 +196,12 @@ with sim_col2:
 
         sim_df = pd.DataFrame({'Time Step': time_data, 'Altitude (m)': alt_data, 'Velocity (m/s)': vel_data})
         
-        st.markdown("### Flight Trajectory Results")
-        
         fig_alt = px.line(sim_df, x='Time Step', y='Altitude (m)', title="Altitude over Time")
-        fig_alt.update_traces(line_color='#1f77b4')
+        fig_alt.update_traces(line_color='#00E676', line_width=4)
+        fig_alt.update_layout(template="plotly_dark")
         st.plotly_chart(fig_alt, use_container_width=True)
         
         fig_vel = px.line(sim_df, x='Time Step', y='Velocity (m/s)', title="Velocity over Time")
-        fig_vel.update_traces(line_color='#ff7f0e')
+        fig_vel.update_traces(line_color='#FF3D00', line_width=4)
+        fig_vel.update_layout(template="plotly_dark")
         st.plotly_chart(fig_vel, use_container_width=True)
-        
-        col_res1, col_res2 = st.columns(2)
-        col_res1.success(f"**Max Altitude:** {max(alt_data):,.0f} m")
-        col_res2.info(f"**Max Velocity:** {max(vel_data):,.0f} m/s")
