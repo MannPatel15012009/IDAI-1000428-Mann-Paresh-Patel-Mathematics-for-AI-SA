@@ -444,5 +444,5 @@ The **Aerospace Data Insights Dashboard** combines:
 
 to create an engaging platform for exploring the science behind space missions.
 
-It demonstrates how data analytics and physics models can work together to provide meaningful insights into complex aerospace systems.
+It demonstrates how **data analytics** and **physics models** can work together to provide meaningful insights into complex aerospace systems.
 
