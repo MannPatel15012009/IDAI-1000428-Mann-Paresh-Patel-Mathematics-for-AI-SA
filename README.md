@@ -18,7 +18,7 @@ In addition, the dashboard includes a **rocket launch simulation** based on **Ne
 
 ---
 ## Live App Link
- 
+ https://idai-1000428-mann-paresh-patel-mathematics-for-ai-sa-ueuqd2t7x.streamlit.app/
 ## 📊 What Does This Web App Visualise?
 
 This web application visualizes **key relationships between aerospace mission parameters and mission outcomes**.
