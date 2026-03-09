@@ -1,21 +1,17 @@
 # 🚀 Aerospace Data Insights: Rocket Launch Visualization Dashboard
 
 ## 🌍Project Overview
-This project is an **interactive data visualizaton and physics simulation dashboard** built using **Streamlit, Plotly, Matplotlib, and Pandas**.
+The **Aerospace Data Insights: Mission Dashboard** is an interactive web application built using **Python, Streamlit, Plotly, and scientific computing libraries** to analyze and visualize space mission data. The app transforms complex aerospace datasets into an intuitive dashboard that allows users to explore how different mission parameters influence outcomes.
 
-The application analyzes historical **space mission data** and visualizes relationships between mission parameters such as:
+The platform visualizes important mission attributes such as payload weight, fuel consumption, mission cost, crew size, scientific yield, mission duration, and distance from Earth. Through interactive charts and correlation analysis, users can identify relationships between these variables and better understand the factors that contribute to successful missions.
 
-- Payload weight
-- Fuel consumption
-- Mission cost
-- Scientific yield
-- Crew size
-- Mission success rates
-- Mission distance
-- Mission duration
+A dynamic filtering system allows users to customize the analysis by selecting launch vehicles, adjusting maximum mission distance, or viewing only highly successful missions. As filters change, all visualizations update automatically, enabling real-time exploratory data analysis.
 
-In addition, the dashboard includes a **rocket launch simulation** based on **Newton’s Second Law of Motion**, allowing users to experiment with rocket parameters and visualize altitude and velocity over time.
+In addition to data analytics, the dashboard includes a **rocket launch simulation module** based on **Newton’s Second Law of Motion**. Users can adjust parameters such as rocket mass, engine thrust, fuel quantity, payload weight, and burn rate to observe how these factors affect rocket behavior during launch.
 
+The simulation models gravitational force and optionally includes atmospheric drag to produce a more realistic representation of rocket ascent. It generates visual outputs showing **altitude over time** and **velocity over time**, helping users understand rocket acceleration and flight dynamics.
+
+By combining **data visualization, interactive controls, and physics-based simulation**, the application provides a comprehensive platform for exploring aerospace mission performance and the science behind rocket launches.
 ---
 ## Live App Link
  https://idai-1000428-mann-paresh-patel-mathematics-for-ai-sa-ueuqd2t7x.streamlit.app/
