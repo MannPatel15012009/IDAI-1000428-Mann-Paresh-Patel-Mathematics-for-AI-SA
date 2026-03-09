@@ -1,6 +1,6 @@
 # 🚀 Aerospace Data Insights: Rocket Launch Visualization Dashboard
 
-## 🌍 Live App Overview
+## 🌍Project Overview
 This project is an **interactive data visualizaton and physics simulation dashboard** built using **Streamlit, Plotly, Matplotlib, and Pandas**.
 
 The application analyzes historical **space mission data** and visualizes relationships between mission parameters such as:
@@ -17,7 +17,8 @@ The application analyzes historical **space mission data** and visualizes relati
 In addition, the dashboard includes a **rocket launch simulation** based on **Newton’s Second Law of Motion**, allowing users to experiment with rocket parameters and visualize altitude and velocity over time.
 
 ---
-
+## Live App Link
+ 
 ## 📊 What Does This Web App Visualise?
 
 This web application visualizes **key relationships between aerospace mission parameters and mission outcomes**.
