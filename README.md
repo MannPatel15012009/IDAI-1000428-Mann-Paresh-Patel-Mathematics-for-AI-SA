@@ -12,6 +12,7 @@ In addition to data analytics, the dashboard includes a **rocket launch simulati
 The simulation models gravitational force and optionally includes atmospheric drag to produce a more realistic representation of rocket ascent. It generates visual outputs showing **altitude over time** and **velocity over time**, helping users understand rocket acceleration and flight dynamics.
 
 By combining **data visualization, interactive controls, and physics-based simulation**, the application provides a comprehensive platform for exploring aerospace mission performance and the science behind rocket launches.
+
 ---
 ## Live App Link
  https://idai-1000428-mann-paresh-patel-mathematics-for-ai-sa-ueuqd2t7x.streamlit.app/
