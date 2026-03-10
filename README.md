@@ -32,6 +32,127 @@ Using interactive graphs and filters, users can explore how mission factors corr
 Additionally, the application includes a **physics-based rocket launch simulation**, demonstrating how **thrust, fuel mass, payload weight, and air drag influence rocket altitude and velocity** during launch.
 
 ---
+## 💻Integration Details
+
+Follow these steps to run the app locally.
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/rocket-mission-dashboard.git
+```
+
+```
+cd rocket-mission-dashboard
+```
+
+---
+
+### 2️⃣ Create Virtual Environment (Recommended)
+
+```
+python -m venv venv
+```
+
+Activate it:
+
+Windows
+
+```
+venv\Scripts\activate
+```
+
+Mac/Linux
+
+```
+source venv/bin/activate
+```
+
+---
+
+### 3️⃣ Install Dependencies
+
+Create a `requirements.txt` file containing:
+
+```
+streamlit
+pandas
+numpy
+plotly
+matplotlib
+seaborn
+```
+
+Then run:
+
+```
+pip install -r requirements.txt
+```
+
+---
+
+### 4️⃣ Run the Streamlit App
+
+```
+streamlit run app.py
+```
+
+The application will open automatically in your browser.
+
+Default local URL:
+
+```
+http://localhost:8501
+```
+
+---
+
+## ☁️ Deployment Instructions
+You can deploy this dashboard online for free using **Streamlit Community Cloud**.
+
+---
+
+### Step 1: Push Code to GitHub
+
+Upload the repository to GitHub.
+
+---
+
+### Step 2: Go to Streamlit Cloud
+
+Visit:
+
+```
+https://share.streamlit.io
+```
+
+Sign in with GitHub.
+
+---
+
+### Step 3: Deploy App
+
+Click **New App** and select:
+
+- Repository
+- Branch
+- `app.py` file
+
+---
+
+### Step 4: Add Dependencies
+
+Make sure `requirements.txt` exists in the repository.
+
+---
+
+### Step 5: Deploy
+
+Streamlit will automatically install dependencies and deploy the app.
+
+Your app will be accessible via a **public URL**.
+
+---
 
 ## ✨ Key Features
 
@@ -199,127 +320,7 @@ Dataset containing mission data including:
 
 ---
 
-## 💻Integration Details
 
-Follow these steps to run the app locally.
-
-### 1️⃣ Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/rocket-mission-dashboard.git
-```
-
-```
-cd rocket-mission-dashboard
-```
-
----
-
-### 2️⃣ Create Virtual Environment (Recommended)
-
-```
-python -m venv venv
-```
-
-Activate it:
-
-Windows
-
-```
-venv\Scripts\activate
-```
-
-Mac/Linux
-
-```
-source venv/bin/activate
-```
-
----
-
-### 3️⃣ Install Dependencies
-
-Create a `requirements.txt` file containing:
-
-```
-streamlit
-pandas
-numpy
-plotly
-matplotlib
-seaborn
-```
-
-Then run:
-
-```
-pip install -r requirements.txt
-```
-
----
-
-### 4️⃣ Run the Streamlit App
-
-```
-streamlit run app.py
-```
-
-The application will open automatically in your browser.
-
-Default local URL:
-
-```
-http://localhost:8501
-```
-
----
-
-## ☁️ Deployment Instructions
-You can deploy this dashboard online for free using **Streamlit Community Cloud**.
-
----
-
-### Step 1: Push Code to GitHub
-
-Upload the repository to GitHub.
-
----
-
-### Step 2: Go to Streamlit Cloud
-
-Visit:
-
-```
-https://share.streamlit.io
-```
-
-Sign in with GitHub.
-
----
-
-### Step 3: Deploy App
-
-Click **New App** and select:
-
-- Repository
-- Branch
-- `app.py` file
-
----
-
-### Step 4: Add Dependencies
-
-Make sure `requirements.txt` exists in the repository.
-
----
-
-### Step 5: Deploy
-
-Streamlit will automatically install dependencies and deploy the app.
-
-Your app will be accessible via a **public URL**.
-
----
 
 ## 📈 Example Use Cases
 
