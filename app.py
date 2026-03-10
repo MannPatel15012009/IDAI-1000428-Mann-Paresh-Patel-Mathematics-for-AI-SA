@@ -144,6 +144,22 @@ st.markdown("---")
 st.header("⚙️ Rocket Launch Path Simulation")
 st.markdown("Simulating Newton's Second Law with optional Air Drag calculation.")
 
+with st.expander("📚 Rocket Science Basics: Newton's Second Law, Thrust, Drag, Payload"):
+    st.markdown("""
+    **Newton's Second Law of Motion** states that the force acting on an object is equal to its mass times its acceleration (F = ma). In rocketry, this law governs how a rocket accelerates: the net force (thrust minus gravity and drag) determines the acceleration.
+
+    - **Thrust**: The force produced by the rocket engine expelling exhaust gases. It pushes the rocket upward. In real missions, thrust must exceed the combined weight and drag to lift off.
+    - **Drag**: Air resistance that opposes motion. It depends on velocity, atmospheric density, and rocket shape. Drag decreases as altitude increases because the atmosphere thins.
+    - **Payload**: The cargo (satellites, crew, instruments) the rocket carries. Heavier payloads require more thrust and fuel to achieve the same altitude.
+
+    **Guiding Questions for Your Project:**
+    - How does adding more payload affect altitude? (Heavier payload reduces acceleration, so altitude decreases for the same fuel.)
+    - How does increasing thrust affect launch success? (Higher thrust can overcome gravity and drag, but may cause structural stress.)
+    - Does lower drag at higher altitudes improve speed? (Yes, with less air resistance, the rocket can accelerate more efficiently.)
+    - How long would it take to reach orbit? (Orbit requires reaching ~7.8 km/s; time depends on thrust profile and mass.)
+    - Can I compare simulation values to real mission data? (Yes, use the dataset to see correlations between payload, fuel, and success.)
+    """)
+
 sim_col1, sim_col2 = st.columns([1, 2])
 
 with sim_col1:
