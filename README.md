@@ -199,7 +199,7 @@ Dataset containing mission data including:
 
 ---
 
-## 💻 Local Installation & Deployment
+## 💻Integration Details
 
 Follow these steps to run the app locally.
 
@@ -274,8 +274,7 @@ http://localhost:8501
 
 ---
 
-## ☁️ Deploying on Streamlit Cloud
-
+## ☁️ Deployment Instructions
 You can deploy this dashboard online for free using **Streamlit Community Cloud**.
 
 ---
