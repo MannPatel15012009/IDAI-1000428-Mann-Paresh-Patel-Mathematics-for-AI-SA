@@ -1,17 +1,12 @@
 # 🚀 Aerospace Data Insights: Rocket Launch Visualization Dashboard
 
-## 🌍Project Overview
-The **Aerospace Data Insights: Mission Dashboard** is an interactive web application built using **Python, Streamlit, Plotly, and scientific computing libraries** to analyze and visualize space mission data. The app transforms complex aerospace datasets into an intuitive dashboard that allows users to explore how different mission parameters influence outcomes.
+## 🌍 Project Overview
 
-The platform visualizes important mission attributes such as payload weight, fuel consumption, mission cost, crew size, scientific yield, mission duration, and distance from Earth. Through interactive charts and correlation analysis, users can identify relationships between these variables and better understand the factors that contribute to successful missions.
+The **Aerospace Data Insights: Mission Dashboard** is an interactive web app built with **Python, Streamlit, and Plotly** to analyze space mission data. It enables users to explore relationships between mission parameters like payload weight, fuel consumption, cost, crew size, duration, and success rates through dynamic, filterable visualizations.
 
-A dynamic filtering system allows users to customize the analysis by selecting launch vehicles, adjusting maximum mission distance, or viewing only highly successful missions. As filters change, all visualizations update automatically, enabling real-time exploratory data analysis.
+The dashboard includes a **rocket launch simulation** based on **Newton's Second Law (F = ma)**. Users can adjust mass, thrust, fuel, payload, and burn rate to see how these factors affect altitude and velocity over time—with optional atmospheric drag for realism.
 
-In addition to data analytics, the dashboard includes a **rocket launch simulation module** based on **Newton’s Second Law of Motion**. Users can adjust parameters such as rocket mass, engine thrust, fuel quantity, payload weight, and burn rate to observe how these factors affect rocket behavior during launch.
-
-The simulation models gravitational force and optionally includes atmospheric drag to produce a more realistic representation of rocket ascent. It generates visual outputs showing **altitude over time** and **velocity over time**, helping users understand rocket acceleration and flight dynamics.
-
-By combining **data visualization, interactive controls, and physics-based simulation**, the application provides a comprehensive platform for exploring aerospace mission performance and the science behind rocket launches.
+The app combines **real-world mission analytics** with **physics-based simulation**, offering an engaging platform to understand aerospace data and rocket dynamics.
 
 ---
 ## Live App Link
@@ -369,36 +364,23 @@ By studying this project, users can learn:
 
 ---
 
-## 📷 Dashboard Preview
+## Visuals of the App:
+<img width="1383" height="630" alt="Screenshot 2026-03-10 183008" src="https://github.com/user-attachments/assets/b627e4a6-81cb-43d2-8af9-2335f697ab9d" />
+<img width="1847" height="799" alt="Screenshot 2026-03-10 181935" src="https://github.com/user-attachments/assets/55beec8e-2358-4a1d-a9be-109ad751f68f" />
+<img width="1840" height="577" alt="Screenshot 2026-03-10 182035" src="https://github.com/user-attachments/assets/2287cc1d-3db3-4616-b19d-6d0ada9c9b52" />
+<img width="1920" height="1080" alt="Screenshot (187)" src="https://github.com/user-attachments/assets/1f649f85-24c3-429c-9555-56b362f850d2" />
+<img width="1500" height="533" alt="Screenshot 2026-03-10 182106" src="https://github.com/user-attachments/assets/db58b083-903f-47f3-bd2b-98cff7e7b05c" />
+<img width="1332" height="791" alt="Screenshot 2026-03-10 182157" src="https://github.com/user-attachments/assets/cf2a9823-08a1-4c21-94e3-093d525c78e2" />
+<img width="1338" height="603" alt="Screenshot 2026-03-10 182231" src="https://github.com/user-attachments/assets/2bef5b49-e7ff-4235-adf9-352cea2a2b03" />
+<img width="1406" height="650" alt="Screenshot 2026-03-10 182318" src="https://github.com/user-attachments/assets/763285ab-6418-4294-8025-aa4f801574e7" />
+<img width="927" height="545" alt="Screenshot 2026-03-10 182922" src="https://github.com/user-attachments/assets/594a72c5-9b41-421e-acd8-1bf3e56e8e9b" />
 
-Add your **Storyboard or Dashboard Screenshots here**.
-
-Example:
-
-```
-![Dashboard Screenshot](images/dashboard.png)
-```
-
-or
-
-```
-![Storyboard](images/storyboard.png)
-```
-
-Create a folder named:
-
-```
-images
-```
-
-inside the repository and place screenshots there.
-
----
-
+## Live Web App Link
+[Streamlit App](https://idai-1000428-mann-paresh-patel-mathematics-for-ai-sa-ueuqd2t7x.streamlit.app/)
 ## 👨‍💻 Author
 
 **Mann Patel**
-WACP Candidate Number-1000428 
+WACP Candidate Number-1000428
 ---
 
 ## ⭐ Contributing
