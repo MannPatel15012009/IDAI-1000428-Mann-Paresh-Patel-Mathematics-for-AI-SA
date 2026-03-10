@@ -372,7 +372,6 @@ By studying this project, users can learn:
 <img width="1500" height="533" alt="Screenshot 2026-03-10 182106" src="https://github.com/user-attachments/assets/db58b083-903f-47f3-bd2b-98cff7e7b05c" />
 <img width="1332" height="791" alt="Screenshot 2026-03-10 182157" src="https://github.com/user-attachments/assets/cf2a9823-08a1-4c21-94e3-093d525c78e2" />
 <img width="1338" height="603" alt="Screenshot 2026-03-10 182231" src="https://github.com/user-attachments/assets/2bef5b49-e7ff-4235-adf9-352cea2a2b03" />
-<img width="1406" height="650" alt="Screenshot 2026-03-10 182318" src="https://github.com/user-attachments/assets/763285ab-6418-4294-8025-aa4f801574e7" />
 <img width="927" height="545" alt="Screenshot 2026-03-10 182922" src="https://github.com/user-attachments/assets/594a72c5-9b41-421e-acd8-1bf3e56e8e9b" />
 
 ## Live Web App Link
