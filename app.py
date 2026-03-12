@@ -68,6 +68,13 @@ with col1:
                       color='Outcome', color_discrete_map=outcome_colors, title="Payload vs. Fuel Requirements")
     fig1.update_layout(template="plotly_dark")
     st.plotly_chart(fig1, use_container_width=True)
+    st.markdown("""
+    **🔍 Insight:** This scatter plot shows the relationship between payload weight and fuel consumption for each mission, colored by outcome.  
+    - **General Trend:** Heavier payloads typically require more fuel, so a positive correlation is expected.  
+    - **Outcome Patterns:** Successful missions (green) often cluster where fuel consumption is proportional to payload, indicating optimal design. Failures (red) may appear at extreme fuel/payload ratios—either underpowered or inefficient.  
+    - **Outliers:** Missions with very high fuel but low payload could indicate engine issues; low fuel with high payload might signal breakthrough propulsion.  
+    - **Actionable Insight:** Identify the fuel-to-payload “sweet spot” that maximizes success probability for future missions.
+    """)
 
 with col2:
     st.subheader("2. Mission Cost: Success vs. Failure")
@@ -76,6 +83,12 @@ with col2:
                   color='Outcome', color_discrete_map=outcome_colors, title="Average Cost by Mission Outcome")
     fig2.update_layout(template="plotly_dark")
     st.plotly_chart(fig2, use_container_width=True)
+    st.markdown("""
+    **🔍 Insight:** This bar chart compares the mean mission cost for successes vs. failures.  
+    - **Cost vs. Success:** If successful missions have higher average cost, it may reflect better components and testing. If failures cost more, it could be due to overruns or last‑minute fixes.  
+    - **Variability:** The bar shows only the average; the spread within each group matters. Failures might include both underfunded risky missions and over‑budget but still failed ones.  
+    - **Strategic Implication:** Helps balance budget against reliability. If success correlates with higher spending, adequate funding is crucial; if not, cost‑cutting may be safe.
+    """)
 
 col3, col4 = st.columns(2)
 
@@ -94,6 +107,13 @@ with col3:
     fig3.update_traces(line_color='#AB63FA', marker=dict(size=2, color='#00E676'))
     fig3.update_layout(template="plotly_dark")
     st.plotly_chart(fig3, use_container_width=True)
+    st.markdown("""
+    **🔍 Insight:** This line chart plots mission duration against distance from Earth.  
+    - **Physical Relationship:** Travel time generally increases with distance, but may not be linear—advanced propulsion (e.g., warp drive) could create flatter segments.  
+    - **Trend Analysis:** A steep slope indicates slow travel; a flat slope suggests very fast propulsion.  
+    - **Outliers:** Missions with unusually short duration at large distances could represent breakthroughs or data errors.  
+    - **Mission Planning:** Helps estimate required mission lengths for target stars, aiding life‑support and crew endurance design.
+    """)
 
 with col4:
     st.subheader("4. Crew Size vs. Mission Success %")
@@ -115,6 +135,13 @@ with col4:
     # Removing the legend since the x-axis already explains the categories perfectly
     fig4.update_layout(template="plotly_dark", showlegend=False)
     st.plotly_chart(fig4, use_container_width=True)
+    st.markdown("""
+    **🔍 Insight:** Box plots show the distribution of mission success percentages across three crew size categories.  
+    - **Success Consistency:** Compare medians—if similar, crew size may not strongly influence success. Differences suggest larger crews bring more expertise but also more complexity.  
+    - **Spread & Outliers:** Narrow boxes mean consistent outcomes; wide boxes indicate variability. Outliers (points beyond whiskers) are missions with extreme success rates despite typical crew sizes.  
+    - **Interpretation:** If large crews have lower median success, coordination or resource strain might be factors. If higher, perhaps they handle emergencies better.  
+    - **Caveat:** Crew size often correlates with mission duration and distance; see heatmap for confounding effects.
+    """)
 st.markdown("---")
 st.subheader("🔥 5. Correlation Heatmap: Factors Affecting Success")
 numeric_cols = ['Distance from Earth (light-years)', 'Mission Duration (years)', 'Mission Cost (billion USD)', 'Scientific Yield (points)', 'Crew Size', 'Mission Success (%)', 'Fuel Consumption (tons)', 'Payload Weight (tons)']
@@ -123,6 +150,13 @@ corr_matrix = filtered_df[numeric_cols].corr()
 fig_heatmap = px.imshow(corr_matrix, text_auto=".2f", aspect="auto", color_continuous_scale='Turbo', title="Correlation Matrix")
 fig_heatmap.update_layout(template="plotly_dark")
 st.plotly_chart(fig_heatmap, use_container_width=True)
+st.markdown("""
+**🔍 Insight:** This heatmap displays Pearson correlation coefficients between all numeric variables.  
+- **Key Drivers of Success:** Look at the row/column for `Mission Success (%)`—strong positive correlations (red) indicate factors that tend to increase success; negative (blue) suggest risks.  
+- **Multicollinearity:** Notice strong correlations among independent variables, e.g., `Distance` and `Duration` (expected). This helps identify redundancy.  
+- **Color Scale:** Values near +1 or -1 indicate strong linear relationships; near 0 means no linear correlation.  
+- **Actionable Insight:** Focus on variables with |r| > 0.5 against success for deeper analysis or design optimization.
+""")
 
 st.markdown("---")
 st.subheader("🔬 6. Scientific Yield vs. Mission Cost")
@@ -138,27 +172,18 @@ ax5.xaxis.label.set_color('white')
 ax5.yaxis.label.set_color('white')
 ax5.tick_params(colors='white')
 st.pyplot(fig5)
+st.markdown("""
+**🔍 Insight:** This scatter plot explores whether higher mission costs translate into greater scientific returns.  
+- **Diminishing Returns:** Often, scientific yield increases with cost up to a point, then plateaus—more money may not buy proportionally more discovery. Look for a curved pattern.  
+- **Efficiency Frontier:** Missions achieving high yield at low cost represent exceptional efficiency. Those with high cost but low yield underdelivered.  
+- **Clusters:** Different mission types (e.g., telescopes, rovers) may cluster in distinct regions.  
+- **Outliers:** Very low‑cost, high‑yield missions are models for future projects; high‑cost, low‑yield ones are cautionary tales.
+""")
 
 # --- 5. ROCKET LAUNCH SIMULATION ---
 st.markdown("---")
 st.header("⚙️ Rocket Launch Path Simulation")
 st.markdown("Simulating Newton's Second Law with optional Air Drag calculation.")
-
-with st.expander("📚 Rocket Science Basics: Newton's Second Law, Thrust, Drag, Payload"):
-    st.markdown("""
-    **Newton's Second Law of Motion** states that the force acting on an object is equal to its mass times its acceleration (F = ma). In rocketry, this law governs how a rocket accelerates: the net force (thrust minus gravity and drag) determines the acceleration.
-
-    - **Thrust**: The force produced by the rocket engine expelling exhaust gases. It pushes the rocket upward. In real missions, thrust must exceed the combined weight and drag to lift off.
-    - **Drag**: Air resistance that opposes motion. It depends on velocity, atmospheric density, and rocket shape. Drag decreases as altitude increases because the atmosphere thins.
-    - **Payload**: The cargo (satellites, crew, instruments) the rocket carries. Heavier payloads require more thrust and fuel to achieve the same altitude.
-
-    **Guiding Questions for Your Project:**
-    - How does adding more payload affect altitude? (Heavier payload reduces acceleration, so altitude decreases for the same fuel.)
-    - How does increasing thrust affect launch success? (Higher thrust can overcome gravity and drag, but may cause structural stress.)
-    - Does lower drag at higher altitudes improve speed? (Yes, with less air resistance, the rocket can accelerate more efficiently.)
-    - How long would it take to reach orbit? (Orbit requires reaching ~7.8 km/s; time depends on thrust profile and mass.)
-    - Can I compare simulation values to real mission data? (Yes, use the dataset to see correlations between payload, fuel, and success.)
-    """)
 
 sim_col1, sim_col2 = st.columns([1, 2])
 
@@ -216,8 +241,22 @@ with sim_col2:
         fig_alt.update_traces(line_color='#00E676', line_width=4)
         fig_alt.update_layout(template="plotly_dark")
         st.plotly_chart(fig_alt, use_container_width=True)
+        st.markdown("""
+        **🔍 Insight:** Altitude curve shows the rocket’s ascent.  
+        - **Initial Climb:** Slow at first due to gravity, then accelerates as mass decreases (fuel burn).  
+        - **With Drag:** Slower initial rise (atmospheric resistance), then rapid increase above dense atmosphere.  
+        - **Burnout:** After fuel depletion, altitude may still increase due to momentum, but eventually peaks.  
+        - **Parameter Sensitivity:** Higher thrust or more fuel gives steeper climb; drag reduces peak altitude.
+        """)
         
         fig_vel = px.line(sim_df, x='Time Step', y='Velocity (m/s)', title="Velocity over Time")
         fig_vel.update_traces(line_color='#FF3D00', line_width=4)
         fig_vel.update_layout(template="plotly_dark")
         st.plotly_chart(fig_vel, use_container_width=True)
+        st.markdown("""
+        **🔍 Insight:** Velocity profile reveals acceleration phases.  
+        - **Increasing Velocity:** While thrust exceeds gravity+drag, velocity rises.  
+        - **Effect of Drag:** With drag enabled, velocity increases more slowly in lower atmosphere.  
+        - **Burnout:** After fuel ends, velocity may plateau or decrease if gravity dominates (unless orbital velocity reached).  
+        - **Educational Value:** Demonstrates trade‑offs in rocket design—ideal for teaching physics.
+        """)
